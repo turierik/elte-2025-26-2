@@ -13,6 +13,7 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'shadows': ['Shadows Into Light Two', 'sans-serif'],
             },
         },
     },
