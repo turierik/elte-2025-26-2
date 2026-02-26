@@ -1,0 +1,14 @@
+- Mikor? Jövő héten 16:05-16:25
+- Géptermi gépen, ZH módban.
+
+1.) nyelvi elemek
+2.) tömbfüggvények - rákérdezős
+3.) tömbfüggvény egyszerű tömbre alkalmazva
+4.) objektumtömbös feladatok tömbfüggvényekkel
+5.) qS / qSA
+6.) DOM - pl. innerText, value, style attribútumok
+7.) eseménykezelés elméletben
+8.) DOM és eseménykezelés példákon
+9.) delegálás elmélete
+10.) delegálás gyakorlata
+
