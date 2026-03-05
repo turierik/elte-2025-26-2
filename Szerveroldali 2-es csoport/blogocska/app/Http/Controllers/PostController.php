@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -21,7 +23,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create', [
+            'users' => User::all(),
+            'tags' => Tag::all()
+        ]);
     }
 
     /**
@@ -29,7 +34,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request -> validate([
+            'title' => 'required|max:50',
+            'content' => 'required|min:50',
+            'author_id' => 'required|integer|exists:users,id',
+            'tags' => 'array',
+            'tags.*' => 'integer|distinct|exists:tags,id'
+        ], [
+            'title.required' => 'A cím kitöltése kötelező!',
+            'title.max' => 'A cím legfeljebb :max karakter lehet!'
+        ]);
+
+        // $post = new Post();
+        // $post -> title = $validated['title'];
+        // $post -> content = $validated['content'];
+        // $post -> author_id = $validated['author_id'];
+        // $post -> save();
+
+        $post = Post::create($validated);
+        $post -> tags() -> attach($validated['tags'] ?? []);
+
+        return redirect() -> route('posts.index');
     }
 
     /**
