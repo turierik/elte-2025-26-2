@@ -1,19 +1,21 @@
 @extends('layouts.blog')
 
-@section('title', 'Új bejegyzés')
+@section('title', 'Bejegyzés szerkesztése')
 
 @section('content')
-    <h1>Új bejegyzés</h1>
-    <form action="{{ route('posts.store') }}" method="post">
+    <h1>{{ $post -> title }} szerkesztése</h1>
+    <form action="{{ route('posts.update', ['post' => $post ]) }}" method="post">
         @csrf
+        @method('PUT')
+
         Cím:<br>
-        <input type="text" name="title" value="{{ old('title', '') }}">
+        <input type="text" name="title" value="{{ old('title', $post -> title ) }}">
         @error('title')
             <span class="text-red-500">{{ $message }}</span>
         @enderror
         <br><br>
         Tartalom:<br>
-        <textarea name="content">{{ old('content', '' )}}</textarea>
+        <textarea name="content">{{ old('content', $post -> content )}}</textarea>
         @error('content')
             <span class="text-red-500">{{ $message }}</span>
         @enderror<br>
@@ -38,12 +40,12 @@
 
         @foreach($tags as $tag)
             <input type="checkbox" name="tags[]" value="{{ $tag -> id }}"
-                {{ in_array($tag -> id, old('tags', [])) ? "checked" : ""  }}
+                {{ in_array($tag -> id, old('tags', $post -> tags -> pluck('id') -> toArray() )) ? "checked" : ""  }}
             >
             <span style="color: {{ $tag -> color }}">{{ $tag -> name }} </span><br>
         @endforeach
         <br>
-        <button class="bg-green-500 text-white p-2 rounded hover:bg-green-600" type="submit">Létrehoz</button>
+        <button class="bg-green-500 text-white p-2 rounded hover:bg-green-600" type="submit">Szerkeszt</button>
     </form>
 
 @endsection
