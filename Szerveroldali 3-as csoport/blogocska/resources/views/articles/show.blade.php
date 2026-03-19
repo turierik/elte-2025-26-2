@@ -12,5 +12,15 @@
     <br><br>
     {{ $article -> content }}
     <br><br>
+
+    @can('update', $article)
+        <a href="{{ route('articles.edit', [ 'article' => $article ])}}">Szerkesztés</a>
+        <form action="{{ route('articles.destroy', [ 'article' => $article ])}}" method="post">
+            @csrf
+            @method('DELETE')
+            <a href="#" class="text-red-500" onclick="event.preventDefault();this.closest('form').submit()">Törlés</a>
+        </form>
+    @endcan
+
     <a href="{{ route('articles.index') }}">Vissza a főoldalra</a>
 @endsection

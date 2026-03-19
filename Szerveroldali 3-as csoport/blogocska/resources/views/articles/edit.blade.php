@@ -1,19 +1,21 @@
 @extends('layouts.main')
 
-@section('title', 'Új cikk írása')
+@section('title', $article -> title . " szerkesztése")
 
 @section('content')
-    <h1>Új cikk írása</h1>
-    <form action="{{ route('articles.store') }}" method="post">
+    <h1>{{ $article -> title }} szerkesztése</h1>
+    <form action="{{ route('articles.update', [ 'article' => $article ]) }}" method="post">
         @csrf
+        @method('PUT')
+
         Cím: <br>
-        <input type="text" name="title" value="{{ old('title', '') }}">
+        <input type="text" name="title" value="{{ old('title', $article -> title ) }}">
         @error('title')
             <span class="text-red-500">{{ $message }}</span>
         @enderror
         <br><br>
         Tartalom: <br>
-        <textarea name="content" cols="30" rows="10">{{ old('content', '')}}</textarea>
+        <textarea name="content" cols="30" rows="10">{{ old('content', $article -> content)}}</textarea>
         @error('content')
             <span class="text-red-500">{{ $message }}</span>
         @enderror
@@ -37,11 +39,11 @@
         <h2>Kategóriák</h2>
         @foreach($categories as $cat)
             <input type="checkbox" name="categories[]" value="{{ $cat -> id }}"
-                {{ in_array($cat -> id, old('categories', [])) ? "checked" : ""}}
+                {{ in_array($cat -> id, old('categories', $article -> categories -> pluck('id') -> toArray())) ? "checked" : ""}}
             >
             <span style="color: {{ $cat -> color }}"> {{ $cat -> title }}</span><br>
         @endforeach
 
-        <button type="submit" class="bg-cyan-600 text-white p-2 rounded-xl mt-4 hover:bg-cyan-700">Létrehoz</button>
+        <button type="submit" class="bg-cyan-600 text-white p-2 rounded-xl mt-4 hover:bg-cyan-700">Szerkeszt</button>
     </form>
 @endsection
