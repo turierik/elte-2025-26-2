@@ -15,7 +15,8 @@
         @enderror
         <br><br>
         Tartalom: <br>
-        <textarea name="content" cols="30" rows="10">{{ old('content', $article -> content)}}</textarea>
+        <div id="editor"></div>
+        <input type="hidden" id="content" name="content">
         @error('content')
             <span class="text-red-500">{{ $message }}</span>
         @enderror
@@ -46,4 +47,11 @@
 
         <button type="submit" class="bg-cyan-600 text-white p-2 rounded-xl mt-4 hover:bg-cyan-700">Szerkeszt</button>
     </form>
+    <script type="module">
+        const editor = window.pell.init({
+            element: document.getElementById('editor'),
+            onChange: (html) => document.getElementById('content').value = html
+        })
+        editor.content.innerHTML = '{!! old('content', $article -> content) !!}';
+    </script>
 @endsection

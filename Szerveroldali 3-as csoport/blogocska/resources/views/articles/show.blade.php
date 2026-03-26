@@ -4,13 +4,18 @@
 
 @section('content')
     <h1>{{ $article -> title }}</h1><br>
+
+    @if ( $article -> image_filename !== null )
+        <img src="{{ Storage::url('images/' . $article -> image_filename ) }}">
+    @endif
+
     Szerző: {{ $article -> author -> name}}<br>
     Létrehozva: {{ $article -> created_at }}<br>
     Kategóriák: @foreach( $article -> categories as $cat )
         <span style="color: {{ $cat -> color }}">{{ $cat -> title}} </span>
     @endforeach
     <br><br>
-    {{ $article -> content }}
+    {!! $article -> content !!}
     <br><br>
 
     @can('update', $article)

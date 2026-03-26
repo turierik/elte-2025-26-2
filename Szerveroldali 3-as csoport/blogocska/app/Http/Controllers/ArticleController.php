@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOrUpdateArticleRequest;
 use App\Models\Article;
 use App\Models\User;
 use App\Models\Category;
@@ -9,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 
 class ArticleController extends Controller
 {
@@ -17,7 +21,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $allArticles = Article::with('author') -> paginate(8); // N+1 probléma, eager loading
+        $allArticles = Article::with('author') -> orderByDesc('created_at') -> paginate(8); // N+1 probléma, eager loading
         return view('articles.index', ['articles' => $allArticles]);
     }
 
@@ -37,22 +41,20 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreOrUpdateArticleRequest $request)
     {
         Gate::authorize('create', Article::class);
 
-        $validated = $request -> validate([
-            'title' => 'required|min:5',
-            'content' => 'required|min:10',
-            // 'author_id' => 'required|integer|exists:users,id',
-            'categories' => 'array',
-            'categories.*' => 'integer|distinct|exists:categories,id'
-        ], [
-            'title.required' => 'A cím kitöltése kötelező!',
-            'title.min' => 'A cím legalább :min karakter legyen!'
-        ]);
+        $validated = $request -> validated();
 
         $validated['author_id'] = Auth::id();
+
+        if ($request -> hasFile('image')){
+            $file = $request -> file('image');
+            $fileName = Str::uuid() . "." . $file -> getClientOriginalExtension();
+            Storage::disk('public') -> put("images/".$fileName, $file -> getContent());
+            $validated['image_filename'] = $fileName;
+        }
 
         $article = Article::create($validated);
         $article -> categories() -> attach($validated['categories'] ?? []);
@@ -93,20 +95,11 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Article $article)
+    public function update(StoreOrUpdateArticleRequest $request, Article $article)
     {
         Gate::authorize('update', $article);
 
-        $validated = $request -> validate([
-            'title' => 'required|min:5',
-            'content' => 'required|min:10',
-            // 'author_id' => 'required|integer|exists:users,id',
-            'categories' => 'array',
-            'categories.*' => 'integer|distinct|exists:categories,id'
-        ], [
-            'title.required' => 'A cím kitöltése kötelező!',
-            'title.min' => 'A cím legalább :min karakter legyen!'
-        ]);
+        $validated = $request -> validated();
 
         $article -> update($validated);
         $article -> categories() -> sync($validated['categories'] ?? []);

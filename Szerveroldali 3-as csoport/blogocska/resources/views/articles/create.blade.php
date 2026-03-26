@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Új cikk írása</h1>
-    <form action="{{ route('articles.store') }}" method="post">
+    <form action="{{ route('articles.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         Cím: <br>
         <input type="text" name="title" value="{{ old('title', '') }}">
@@ -13,11 +13,20 @@
         @enderror
         <br><br>
         Tartalom: <br>
-        <textarea name="content" cols="30" rows="10">{{ old('content', '')}}</textarea>
+        <div id="editor"></div>
+        <input type="hidden" id="content" name="content">
         @error('content')
             <span class="text-red-500">{{ $message }}</span>
         @enderror
         <br><br>
+
+        Kép:
+        <input type="file" name="image">
+        @error('image')
+            <span class="text-red-500">{{ $message }}</span>
+        @enderror
+        <br><br>
+
         {{-- Szerző: <br>
         <select name="author_id">
             @foreach($users as $user)
@@ -44,4 +53,11 @@
 
         <button type="submit" class="bg-cyan-600 text-white p-2 rounded-xl mt-4 hover:bg-cyan-700">Létrehoz</button>
     </form>
+    <script type="module">
+        const editor = window.pell.init({
+            element: document.getElementById('editor'),
+            onChange: (html) => document.getElementById('content').value = html
+        })
+        editor.content.innerHTML = '{!! old('content', '') !!}';
+    </script>
 @endsection

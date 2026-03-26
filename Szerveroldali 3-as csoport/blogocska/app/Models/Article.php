@@ -9,7 +9,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'author_id'];
+    protected $fillable = ['title', 'content', 'author_id', 'image_filename'];
 
     public function author(){
         return $this -> belongsTo(User::class, 'author_id');
