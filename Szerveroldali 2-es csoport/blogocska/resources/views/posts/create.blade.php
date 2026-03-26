@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Új bejegyzés</h1>
-    <form action="{{ route('posts.store') }}" method="post">
+    <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         Cím:<br>
         <input type="text" name="title" value="{{ old('title', '') }}">
@@ -13,10 +13,19 @@
         @enderror
         <br><br>
         Tartalom:<br>
-        <textarea name="content">{{ old('content', '' )}}</textarea>
+        <textarea id="content" name="content" style="display: none"></textarea>
+        <div id="toolbar"></div>
+        <div id="editor" class="border"></div>
         @error('content')
             <span class="text-red-500">{{ $message }}</span>
         @enderror<br>
+
+        Kép:<br>
+        <input type="file" name="image">
+        @error('image')
+            <span class="text-red-500">{{ $message }}</span>
+        @enderror<br>
+
         {{-- Szerző:<br>
         <select name="author_id">
             @foreach($users as $user)
@@ -46,4 +55,21 @@
         <button class="bg-green-500 text-white p-2 rounded hover:bg-green-600" type="submit">Létrehoz</button>
     </form>
 
+    <script type="module">
+        const editor = window.createEditor({
+            element: document.getElementById('editor'),
+            content: '{!! old('content', '' ) !!}',
+            toolbarContainer: '#toolbar',
+            toolbarButtons: [
+                'heading',
+                'bold',
+                'italic',
+                'underline',
+                'link',
+                'bulletList',
+                'orderedList'
+            ],
+            onChange: (html) => document.getElementById('content').innerHTML = html
+        });
+    </script>
 @endsection

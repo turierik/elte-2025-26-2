@@ -4,13 +4,18 @@
 
 @section('content')
     <h1>{{ $post -> title }}</h1>
+
+    @if ($post -> image_filename !== null)
+        <img src="{{ Storage::url("images/" . $post -> image_filename) }}">
+    @endif
+
     Szerző: {{ $post -> author -> name }}<br>
     Létrehozva: {{ $post -> created_at }}<br>
     Címkék: @foreach ($post -> tags as $tag)
         <span style="color: {{ $tag -> color}}">{{$tag -> name}} </span>
     @endforeach
     <br><br>
-    {{ $post -> content }}
+    {!! $post -> content !!}
     <br><br>
     @can('update', $post)
         <a href="{{ route('posts.edit', ['post' => $post])}}">Szerkesztés</a><br>
