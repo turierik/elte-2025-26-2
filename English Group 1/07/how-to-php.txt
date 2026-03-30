@@ -1,0 +1,23 @@
+HOW TO RUN PHP (on Windows, on the local machines)
+You will need to set up PHP on the start of the exam!
+
+
+1. install php and run the build-in development server
+ - this is made for dev
+ - installing on Windows is not easy, so we made an installer:
+   - Canvas: Automated local PHP environment - Windows only
+     - extract first zip, and run the exe
+   - on Linux: type 'install php' in your package manager
+   - on Mac: ???
+ - after installing, close ALL terminals
+ - to test: php -v
+ - to start PHP server, go to a folder and: php -S localhost:4000
+
+2. xampp - installed on the local pc, but:
+ - it's an old version of PHP
+ - it hides non-fatal error messages and warnings
+ - C:/xampp/xampp-control.exe
+ - document root: htdocs
+
+3. use a shared hosting site
+ - not an option on the exam

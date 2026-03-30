@@ -1,0 +1,20 @@
+HOW TO RUN PHP (on Windows)
+YOU WILL NEED TO TO THIS ON THE EXAM
+
+Option 1. install php and run developer server - recommended!
+ - Canvas: Automated local PHP environment installer (Windows only)
+   - download the first zip, unzip, run the exe
+ - on Linux: type 'install php' into your package manager
+ - on Mac: brew install php
+ - after installing: close ALL terminals (inc. VS Code)
+ - to test: php -v
+ - to run the developer server, go the folder where your code is and type: php -S localhost:4000
+
+Option 2. xampp
+ - on the lab computer: C:/xampp/xampp-control.exe
+ - it's an older version of PHP
+ - it hides non-fatal error messages and warning
+ - document room: htdocs folder
+
+Option 3. use a shared hosting provider / ELTE servers
+ - not an option for the exam 
