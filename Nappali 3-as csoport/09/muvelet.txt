@@ -1,0 +1,6 @@
+CRUD műveletek:
+1.) listázás ✅             index.php
+2.) egy olvasása ✅         show.php?id=2 --> $_GET['id']
+3.) beszúrás/létrehozás ✅  new.php
+4.) módosítás ✅            edit.php?id=2 --> $_GET['id']
+5.) törlés ✅               delete.php?id=2 --> $_GET['id']

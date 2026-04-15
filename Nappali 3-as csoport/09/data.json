@@ -1,0 +1,32 @@
+{
+    "1": {
+        "id": 1,
+        "name": "Kiss Pista",
+        "age": 42
+    },
+    "3": {
+        "id": "3",
+        "name": "Szab\u00f3 S\u00e1ndor",
+        "age": 33
+    },
+    "2026Apr15070428": {
+        "id": "2026Apr15070428",
+        "name": "",
+        "age": ""
+    },
+    "2026Apr15070616": {
+        "id": "2026Apr15070616",
+        "name": "Minta M\u00f3kus",
+        "age": "3"
+    },
+    "69df3954e198d": {
+        "id": "69df3954e198d",
+        "name": "Fenn A F\u00e1n",
+        "age": 55
+    },
+    "69df3eb701e35": {
+        "name": "Teszt",
+        "age": 4,
+        "id": "69df3eb701e35"
+    }
+}

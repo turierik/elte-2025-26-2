@@ -1,0 +1,9 @@
+Kezdés:
+8:20-8:40
+20 kérdés, 20 pont
+
+Témák:
+1. nyelvi alapok - szintakxis, tömbfüggvények elméletben-gyakorlatban
+2. űrlapfeldolgozás - validációs függvények, állapottartás, GET vs POST, mi küldődik el?
+3. adattárolás - Storage (milyen fv-ek vannak, mit ad vissza, JSON vs serialize, stb.)
+4. elméletibb kérdések - pl. státuszkód, HTTP metódus
