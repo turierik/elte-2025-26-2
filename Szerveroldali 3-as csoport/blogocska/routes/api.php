@@ -10,3 +10,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/articles', [ApiController::class, 'index']);
 Route::get('/articles/{article}', [ApiController::class, 'show']);
+Route::post('/login', [ApiController::class, 'login']);
+Route::post('/articles', [ApiController::class, 'store']) -> middleware('auth:sanctum');
+Route::get('/articles/{article}/categories', [ApiController::class, 'indexCategories']);
+Route::patch('/articles/{article}/categories', [ApiController::class, 'updateCategories']);

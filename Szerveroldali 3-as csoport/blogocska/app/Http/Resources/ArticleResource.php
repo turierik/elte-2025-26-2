@@ -22,7 +22,9 @@ class ArticleResource extends JsonResource
             'content' => $this -> content,
             'created_at' => Carbon::parse($this -> created_at) -> format('Y. m. d. H:i:s'),
             'updated_at' => Carbon::parse($this -> updated_at) -> format('Y. m. d. H:i:s'),
-            'image_filename' => $this -> image_filename
+            'image_filename' => $this -> image_filename,
+            'categories' => $this -> whenLoaded('categories'),
+            'author' => $this -> whenLoaded('author')
         ];
     }
 }
