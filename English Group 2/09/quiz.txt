@@ -1,0 +1,14 @@
+PHP Quiz
+
+10:20 - 10:40
+(arrive by 10:15)
+
+20 questions, 20 mins, 20 pts
+
+1. language elements (variables, syntax, etc.)
+2. array functions (what is the result?)
+3. array function in theory
+4. form validation (validation rules, etc.)
+5. form handling (method, what data is sent?)
+6. data storage (mostly Storage.php)
+7. pure theory (HTTP protocoll, status code, HTTP method)

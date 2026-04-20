@@ -1,0 +1,27 @@
+{
+    "0": {
+        "id": "0",
+        "name": "John Doe",
+        "age": 42
+    },
+    "1": {
+        "id": "1",
+        "name": "Steve Smith",
+        "age": 23
+    },
+    "2": {
+        "id": "2",
+        "name": "Peter Parker Jr.",
+        "age": 13
+    },
+    "69e5e8132e9a1": {
+        "id": "69e5e8132e9a1",
+        "name": "Chris Taylor",
+        "age": 11
+    },
+    "69e5e85aa51e3": {
+        "id": "69e5e85aa51e3",
+        "name": "Bob the Builder",
+        "age": 40
+    }
+}
