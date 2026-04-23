@@ -1,0 +1,13 @@
+
+Kvíz: április 30.
+16:05 - 16:25
+
+20 perc, 20 kérdés, 20 pont (min: 8 pont)
+
+1. nyelvi elemek, szintaxis
+2. tömbök-objektumok elméletben (melyik tömbfüggvényt használnád, stb...)
+3. tömbfüggvények gyakorlatban (pl. mi az eredménye?)
+4. űrlapok validációja (hogyan validálod, hogy...?)
+5. űrlapok elküldése (pl. állapottartás, mi küldőzik el?)
+6. adattárolás (~Storage)
+7. "elmélet" (URL, HTTP kérés-válasz, HTTP metódus, HTTP státuszkód, ...)

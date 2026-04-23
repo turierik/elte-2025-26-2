@@ -1,0 +1,22 @@
+{
+    "0": {
+        "id": 0,
+        "name": "Magdi anyus",
+        "age": 62
+    },
+    "1": {
+        "id": 1,
+        "name": "Kert\u00e9sz Vilmos",
+        "age": 55
+    },
+    "2": {
+        "id": 2,
+        "name": "Ber\u00e9nyi Mikl\u00f3s",
+        "age": 40
+    },
+    "69ea2f5c1eaf4": {
+        "id": "69ea2f5c1eaf4",
+        "name": "Valaki M\u00e1s",
+        "age": 8
+    }
+}
