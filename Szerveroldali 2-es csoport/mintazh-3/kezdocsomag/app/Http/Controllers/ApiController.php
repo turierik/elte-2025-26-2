@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePizzaRequest;
+use App\Http\Resources\PizzaResource;
 use App\Models\Customer;
 use App\Models\Pizza;
 use App\Models\Topping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ApiController extends Controller
 {
     public function task1(){
-        return Pizza::all();
+        return PizzaResource::collection(Pizza::all());
     }
 
     public function task2(string $customer){
@@ -20,20 +23,14 @@ class ApiController extends Controller
             ['customer' => 'required|integer']
         ) -> validate();
         $customer = Customer::findOrFail($customer);
-        return $customer -> pizzas;
+        return $customer -> pizzas -> toResourceCollection();
     }
 
-    public function task3(Request $request){
-        $validated = $request -> validate([
-            'name' => 'string',
-            'size' => 'required|integer|in:24,32,50',
-            'base' => 'required|string|in:tomato,cream,bbq,none',
-            'cheese_crust' => 'boolean',
-            'customer_id' => 'required|integer|exists:customers,id'
-        ]);
+    public function task3(StorePizzaRequest $request){
+        $validated = $request -> validated();
         $validated["name"] ??= null;
         $validated["cheese_crust"] ??= false;
-        return Pizza::create($validated);
+        return Pizza::create($validated) -> toResource();
     }
 
     public function task4(string $pizza){
@@ -76,11 +73,27 @@ class ApiController extends Controller
             ['pizza' => 'required|integer']
         ) -> validate();
         $pizza = Pizza::findOrFail($pizza);
+
+        //if ($pizza -> customer_id !== $request -> user() -> id)
+        //    return response() -> json(["message" => "Not your pizza."], 403);
+
+        Gate::authorize('update', $pizza);
+
         $validated = $request -> validate([
             "toppings" => "required|array",
-            "toppings.*" => "integer|distinct|exists:toppings,id"
+            "toppings.*" => "string|exists:toppings,name"
         ]);
-        $pizza -> toppings() -> sync($validated["toppings"]);
+
+        $toppingCount = collect(array_count_values($validated["toppings"]));
+
+        $allToppings = Topping::whereIn('name', $validated["toppings"]) -> get(['name', 'id']) -> toArray();
+
+        $toSync = $toppingCount -> mapWithKeys(function ($item, $key) use ($allToppings) {
+            $toppingId = array_find($allToppings, fn($t) => $t["name"] === $key)["id"];
+            return [$toppingId => ["amount" => $item]];
+        });
+
+        $pizza -> toppings() -> sync($toSync);
         return $this -> task4($pizzaId);
     }
 }

@@ -29,4 +29,9 @@ class Pizza extends Model
     public function toppings(){
         return $this -> belongsToMany(Topping::class) -> withPivot('amount');;
     }
+
+    public function price(){
+        return $this -> size * 100 +
+            $this -> toppings -> map(fn($t) => $t -> price * $t -> pivot -> amount) -> sum();
+    }
 }
