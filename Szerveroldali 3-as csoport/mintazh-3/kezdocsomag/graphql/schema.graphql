@@ -1,12 +1,24 @@
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
 type Query {
-    pizzas: [Pizza!]!
-    pizza(id: ID!): Pizza
+    pizzas: [Pizza!]! @all
+    pizza(id: ID! @eq): Pizza @find
+    statistics: Statistics!
+}
+
+type Statistics {
+    pizzaCount: Int!
+    averagePizzaPrice: Float!
+    favouriteTopping: Topping!
 }
 
 type Mutation {
-    createTopping(input: CreateToppingInput!): Topping
+    createTopping(input: CreateToppingInput! @spread): Topping @create
+}
+
+input CreateToppingInput {
+    name: String! @rules(apply: ["unique:toppings,name"])
+    price: Int! @rules(apply: ["min:1"])
 }
 
 type Customer {
@@ -28,6 +40,9 @@ type Pizza {
     created_at: DateTime!
     updated_at: DateTime!
     pivot: PizzaToppingPivot!
+    customer: Customer!
+    toppings: [Topping!]!
+    price: Int!
 }
 
 type Topping {

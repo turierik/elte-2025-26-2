@@ -14,3 +14,5 @@ Route::post('/pizzas', [ApiController::class, 'task3']);
 Route::get('/pizzas/{pizza}/toppings', [ApiController::class, 'task4']);
 Route::get('/toppings', [ApiController::class, 'task5']);
 Route::post('/login', [ApiController::class, 'task6']);
+Route::put('/pizzas/{pizza}/toppings', [ApiController::class, 'task7'])
+    -> middleware('auth:sanctum');
